@@ -1,33 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState,useEffect} from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { Routes, Route } from "react-router-dom"
+import axios from 'axios';
 
+import { useAuth } from './context/AuthContext';
+import { useDispatch } from 'react-redux';
+
+import Home from './components/Home.jsx';
+import LoginForm from './components/LoginForm.jsx';
+import RegisterForm from './components/RegisterForm.jsx';
+import PrivateRoutes from './components/PrivateRoutes.jsx';
+import UnAuthorized from './components/UnAuthorized.jsx';
+import NavBar from './components/Navbar/NavBar.jsx';
+
+function App() {
+  
+  const dispatch = useDispatch()
+
+  const { user, handleLogin } = useAuth()
+
+  useEffect(() => {
+    if(localStorage.getItem("token")) {
+        (async () => {
+            const response = await axios.get("http://localhost:5000/api/user/account", {
+                headers : {
+                    "Authorization" : localStorage.getItem("token")
+                }
+            })
+            handleLogin(response.data)
+        }) ()
+    }
+}, [])
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <NavBar />
+      <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/unauthorized" element={<UnAuthorized />} />
+      </Routes>
     </>
   )
 }

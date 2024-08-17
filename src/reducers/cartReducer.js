@@ -34,7 +34,7 @@ export default function cartReducers(state=initialState,action){
 
         case "INC_QTY" : {
             const updatedLineItems = state.data.lineItems.map((ele) => {
-              if (ele._id === action.payload._id) {
+              if (ele.productId === action.payload.productId) {
                 return { ...ele, quantity: ele.quantity + 1 }
               } else {
                 return ele
@@ -48,7 +48,7 @@ export default function cartReducers(state=initialState,action){
             console.log('state',state)
             console.log('action',action.payload)
             const updatedLineItems = state.data.lineItems.map((ele) => {
-              if (ele._id === action.payload._id) {
+              if (ele.productId === action.payload.productId) {
                 return { ...ele, quantity: ele.quantity - 1 }
               } else {
                 return ele

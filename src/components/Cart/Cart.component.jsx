@@ -1,6 +1,8 @@
 import styles from "./Cart.module.css"
 import CartCard from "../general/CartCard/cartCard.component";
 import { useSelector } from "react-redux";
+import { startDeleteMyCartLineItem, startDecQty, startIncQty } from "../../actions/cartAction"
+import { useDispatch } from "react-redux";
 export default function Cart (){
     // const cartItems = [
     //     {
@@ -19,6 +21,7 @@ export default function Cart (){
     //     },
     //     // ...
     //   ];
+    const dispatch = useDispatch()
 
       const cartItems = useSelector((state=>{
         return state.cart.data
@@ -27,10 +30,21 @@ export default function Cart (){
       
       const handleRemove = (item) => {
         // Remove item from cart logic here
+        const userConfirmation = window.confirm("Are you sure to remove the item ?")
+        if(userConfirmation) {
+            // console.log("hii")
+            dispatch(startDeleteMyCartLineItem(item.productId))
+            
+        }
       };
       
-      const handleQtyChange = (item, newQty) => {
+      const handleQtyInc = (item) => {
         // Update item qty in cart logic here
+        dispatch(startIncQty(item.productId))
+      };
+      const handleQtyDec = (item) => {
+        // Update item qty in cart logic here
+        dispatch(startDecQty(item.productId))
       };
       
       return (
@@ -40,9 +54,14 @@ export default function Cart (){
               key={item.id}
               item={item}
               onRemove={handleRemove}
-              onQtyChange={handleQtyChange}
+              onQtyInc={handleQtyInc}
+              onQtyDec={handleQtyDec}
             />
           ))}
+          <div>
+          <h5>Total Amount</h5>
+          {!cartItems || cartItems?.lineItems?.length === 0 ? 0 : cartItems?.totalAmount}
+          </div>
         </div>
       );
 }

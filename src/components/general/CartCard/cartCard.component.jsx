@@ -1,17 +1,16 @@
 import React from 'react';
 import styles from './cartCard.module.css';
-
-export default function CartCard({ item, onRemove, onQtyChange }) {
+import { useDispatch } from 'react-redux';
+export default function CartCard({ item, onRemove, onQtyInc, onQtyDec }) {
+  const dispatch = useDispatch()
   const { productName, productImage, price, quantity } = item;
 
   const handleQtyIncrease = () => {
-    onQtyChange(item, qty + 1);
+    onQtyInc(item)
   };
 
   const handleQtyDecrease = () => {
-    if (qty > 1) {
-      onQtyChange(item, qty - 1);
-    }
+    onQtyDec(item)
   };
 
   const handleRemove = () => {
@@ -25,7 +24,8 @@ export default function CartCard({ item, onRemove, onQtyChange }) {
         <h4 className={styles.name}>{productName}</h4>
         <p className={styles.price}>${price}</p>
         <div className={styles.qtyContainer}>
-          <button className={styles.qtyButton} onClick={handleQtyDecrease}>
+          <button className={styles.qtyButton} onClick={handleQtyDecrease}
+          disabled={quantity === 1}>
             -
           </button>
           <span className={styles.qty}>{quantity}</span>

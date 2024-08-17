@@ -48,13 +48,13 @@ export const startDeleteMyCartLineItem = (id) => {
     return async(dispatch) => {
         try {
             // console.log("hii 2")
-            const response = await axios.delete(`http://localhost:5000/api/user/cart/${id}`, {
+            const response = await axios.delete(`http://localhost:5001/api/user/cart/${id}`, {
                 headers : {
                     "Authorization" : localStorage.getItem('token')
                 }
             })
             const lineItem= response.data.lineItems.find((ele)=>{
-                return ele._id === id
+                return ele.productId === id
             })
             dispatch(deleteMyCartLineItem(response.data))
             // window.location.reload()
@@ -75,13 +75,13 @@ const deleteMyCartLineItem = (lineItem) => {
 export const startIncQty = (id) => {
     return async(dispatch) => {
         try {
-            const response = await axios.put(`http://localhost:5000/api/user/cart/inc/${id}`, {}, {
+            const response = await axios.put(`http://localhost:5001/api/user/cart/inc/${id}`, {}, {
                 headers : {
                     "Authorization" : localStorage.getItem('token')
                 }
             })
             const lineItem= response.data.lineItems.find((ele)=>{
-                return ele._id === id
+                return ele.productId === id
             })
             
             dispatch(incQty(lineItem))
@@ -103,13 +103,13 @@ const incQty = (lineItem) => {
 export const startDecQty = (id) => {
     return async(dispatch) => {
         try {
-            const response = await axios.put(`http://localhost:5000/api/user/cart/dec/${id}`, {}, {
+            const response = await axios.put(`http://localhost:5001/api/user/cart/dec/${id}`, {}, {
                 headers : {
                     "Authorization" : localStorage.getItem('token')
                 }
             })
             const lineItem= response.data.lineItems.find((ele)=>{
-                return ele._id === id
+                return ele.productId === id
             })
             
             dispatch(decQty(lineItem))

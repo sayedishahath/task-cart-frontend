@@ -1,7 +1,8 @@
 import styles from "./Cart.module.css"
 import CartCard from "../general/CartCard/cartCard.component";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { startDeleteMyCartLineItem, startDecQty, startIncQty } from "../../actions/cartAction"
+import { startGetMyCart, startDeleteMyCartLineItem, startDecQty, startIncQty } from "../../actions/cartAction"
 import { useDispatch } from "react-redux";
 export default function Cart (){
     // const cartItems = [
@@ -22,6 +23,10 @@ export default function Cart (){
     //     // ...
     //   ];
     const dispatch = useDispatch()
+
+    useEffect(() => {
+      dispatch(startGetMyCart())
+  }, [dispatch])
 
       const cartItems = useSelector((state=>{
         return state.cart.data
@@ -48,7 +53,7 @@ export default function Cart (){
       };
       
       return (
-        <div>
+        <div className={styles.container}>
           {cartItems?.lineItems?.map((item) => (
             <CartCard
               key={item.id}

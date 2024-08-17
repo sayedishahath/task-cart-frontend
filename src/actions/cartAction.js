@@ -2,7 +2,7 @@ import axios from 'axios'
 export const startCreateCart=(cart)=>{
     return async(dispatch)=>{
         try{
-            const response = await axios.post('http://localhost:5000/api/user/cart/',cart,{
+            const response = await axios.post('http://localhost:5001/api/user/cart/',cart,{
                 headers:{
                     'Authorization' : localStorage.getItem('token')
                 }
@@ -25,7 +25,7 @@ const createCart =(cartItems)=>{
 export const startGetMyCart = ()=>{
     return async(dispatch)=>{
         try{
-            const response = await axios.get('http://localhost:5000/api/user/cart/',{
+            const response = await axios.get('http://localhost:5001/api/user/cart/',{
                 headers:{
                     "Authorization" : localStorage.getItem('token')
                 }

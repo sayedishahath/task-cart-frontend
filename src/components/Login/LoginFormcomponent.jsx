@@ -17,13 +17,6 @@ Array.prototype.findErrors = function(name) {
         }
     })
     return result
-    // for(let i = 0; i < this.length; i++) {
-    //     let result = ""
-    //     if(this[i].path === name) {
-    //         result += this[i].msg
-    //     }
-    //     return result
-    // }
 }
 
 export default function LoginForm() {

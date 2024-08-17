@@ -35,6 +35,7 @@ export const startGetMyCart = ()=>{
             // console.log(response.data)
             dispatch(getMyCart(response.data))
         }catch(err){
+            // toast.error('add first item to cart')
             console.log(err)
         }
     }

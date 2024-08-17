@@ -15,7 +15,7 @@ export default function Cart (){
       const cartItems = useSelector((state=>{
         return state.cart.data
       }))
-      console.log('cart',cartItems)
+      console.log('cartitems ',cartItems)
       
       const handleRemove = (item) => {
         const userConfirmation = window.confirm("Are you sure to remove the item ?")
@@ -37,8 +37,9 @@ export default function Cart (){
       
       return (
         <div className={styles.container}>
-          <div className={styles.cartContainer}>
-          {cartItems?.lineItems?.map((item,index) => (
+          <div className={`${(cartItems.length===0 || cartItems?.lineItems?.length === 0) ? styles.cartContainerNB : styles.cartContainer}`}>
+          {cartItems?.lineItems?.length>0?
+          cartItems?.lineItems?.map((item,index) => (
             <>
             <CartCard
               key={item.id}
@@ -49,14 +50,15 @@ export default function Cart (){
             />
             {index < cartItems.lineItems.length - 1 && <hr style={{}} />}
             </>
-          ))}
+          )):
+          <p >No items in cart</p>}
           </div>
           <div className={styles.amountContainer}>
             <div className={styles.title}>Total Amount</div>
             <div className={styles.price}>
-            {`${!cartItems || cartItems?.lineItems?.length === 0 ? '$ '+0 : '$ '+cartItems?.totalAmount}`} 
+            {`${(cartItems.length===0 || cartItems?.lineItems?.length === 0) ? '$ '+0 : '$ '+cartItems?.totalAmount}`} 
             </div>
-            <button className={styles.button} onClick={handleCheckout}>proceed to checkout</button>
+            <button className={styles.button} onClick={handleCheckout} disabled={cartItems?.lineItems?.length===0}>proceed to checkout</button>
           </div>
         </div>
       );

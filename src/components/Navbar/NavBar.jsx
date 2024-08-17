@@ -22,7 +22,12 @@ export default function NavBar() {
         Cart
       </Link>
       {user ? (
-        <button className={styles.logoutButton} onClick={handleLogout}>
+        <button className={styles.logoutButton} onClick={()=>{
+          localStorage.removeItem("token")
+          handleLogout
+          navigate("/")
+          window.location.reload()
+        }}>
           <LuLogOut />
           Logout
         </button>

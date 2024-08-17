@@ -24,8 +24,11 @@ export default function ProductCard({ product }) {
             }
         ]
     }
-    dispatch(startCreateCart(cart));
+    dispatch(startCreateCart(cart)); 
+    navigate('/cart')
+    toast.success('item added to cart')
     }else{
+      toast.error('Please login to add product to cart')
       navigate('/login')
     }
   }

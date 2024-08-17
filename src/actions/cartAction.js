@@ -1,4 +1,6 @@
 import axios from 'axios'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom';
 export const startCreateCart=(cart)=>{
     return async(dispatch)=>{
         try{
@@ -9,7 +11,7 @@ export const startCreateCart=(cart)=>{
             })
             console.log(response.data)
             dispatch(createCart(response.data))
-            alert('item added to cart')
+         
         }catch(err){
             console.log(err)
         }

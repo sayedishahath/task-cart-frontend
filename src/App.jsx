@@ -7,10 +7,10 @@ import axios from 'axios';
 import { useAuth } from './context/AuthContext';
 import { useDispatch } from 'react-redux';
 
-import Toaster from "react-hot-toast"
+import {Toaster} from "react-hot-toast"
 import Home from './components/Home/Home.component.jsx';
-import LoginForm from './components/LoginForm.jsx';
-import RegisterForm from './components/RegisterForm.jsx';
+import LoginForm from './components/Login/LoginFormcomponent.jsx';
+import RegisterForm from './components/Register/RegisterFormcomponent.jsx';
 import PrivateRoutes from './components/PrivateRoutes.jsx';
 import UnAuthorized from './components/UnAuthorized.jsx';
 import NavBar from './components/Navbar/NavBar.jsx';
@@ -40,11 +40,13 @@ function App() {
 
 useEffect(()=>{
   if(localStorage.getItem("token")){
-    dispatch(startGetProducts())
     dispatch(startGetMyCart())
   }
-})
-
+  
+},[])
+useEffect(()=>{
+  dispatch(startGetProducts())
+},[])
   return (
     <>
       <NavBar />
@@ -57,6 +59,7 @@ useEffect(()=>{
           <Route path="/checkout" element={<Checkout/>}/>
 
       </Routes>
+      <Toaster/>
      
     </>
   )

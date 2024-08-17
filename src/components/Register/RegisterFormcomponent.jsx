@@ -1,13 +1,14 @@
 import { useState } from "react"
 import axios from "axios"
 
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Alert } from "reactstrap";
-import { FaLock, FaUser } from "react-icons/fa";
-import { MdVisibility, MdVisibilityOff } from "react-icons/md";
-
-import { useAuth } from "../context/AuthContext";
-
+import { FaUser, FaLock, FaPhone } from "react-icons/fa";
+import { MdMail, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import PhoneInput from "react-phone-input-2"
+import 'react-phone-input-2/lib/style.css'
+import styles from "./Register.module.css"
 Array.prototype.findErrors = function(name) {
     let result = ""
     this.forEach(ele => {
@@ -25,19 +26,21 @@ Array.prototype.findErrors = function(name) {
     // }
 }
 
-export default function LoginForm() {
+export default function Register() {
 
-    const { handleLogin } = useAuth()
     const navigate = useNavigate()
     const [form, setForm] = useState({
         username : "",
-        password : ""
+        password : "",
+        email : ""
     })
+    const [confirmPassword, setConfirmPassword] = useState("")
     const [isVisible, setISVisible] = useState(false)
+
+    // console.log(phone)
 
     const [formErrors, setFormErrors] = useState("")
     const [serverErrors, setServerErrors] = useState("")
-
     const errors = {}
 
     const validateErrors = () => {
@@ -47,8 +50,15 @@ export default function LoginForm() {
         if(form.password.trim().length === 0){
             errors.password = "Password is Required"
         }
+        if(form.password !== confirmPassword) {
+            errors.confirmPassword = "Passwords do not match"
+        }
+        if(form.email.trim().length === 0){
+            errors.email = "Email is Required"
+        }
     }
     validateErrors()
+    // const [ isRegistered, setIsRegistered ] = useState(false)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -59,46 +69,49 @@ export default function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        // console.log(form)
+
         const formData = {
             username : form.username,
-            password : form.password
+            password : form.password,
+            email : form.email
         }
+        // console.log(formData)
 
         if(Object.keys(errors).length === 0) {
             try {
-                const response = await axios.post("http://localhost:5001/api/users/login", formData)
-                const token = response.data.token
-                const user = response.data.user
-                localStorage.setItem("token", token)
+                const response = await axios.post("http://localhost:5000/api/user/register", formData)
                 console.log(response.data)
-                handleLogin(user)
-                alert("Successfully Logged In")
+                alert("Successfully Registered!")
+                setForm({
+                    username : "",
+                    password : "",
+                    email : "",
+                })
+                // setPhone("")
                 setFormErrors("")
                 setServerErrors("")
-                navigate('/')
+                // setIsRegistered(true)
+                navigate("/")
             } catch(err) {
                 // alert(err.message)
                 console.log(err)
-                if(err.response.data.errors) {
-                    setServerErrors(err.response.data.errors)
-                } else {
-                    setServerErrors(err.response.data)
-                }
-                console.log(serverErrors)
                 setFormErrors("")
+                setServerErrors(err.response.data.error)
+                console.log(serverErrors)
             }
         } else {
+            console.log(formErrors)
             setFormErrors(errors)
             setServerErrors("")
         }
     }
-    // console.log(formErrors)
 
     return (
-        <div>
+        <div className="login">
             <div className="wrapper">
                 <form onSubmit={handleSubmit}>
-                    <h1>Login</h1>
+                    <h1>Register</h1>
                     {serverErrors.error && (
                         <Alert color="danger">{serverErrors && serverErrors.error} </Alert>
                     )}
@@ -108,11 +121,12 @@ export default function LoginForm() {
                             name="username"
                             id="username"
                             value={form.username}
-                            placeholder="Enter Email/Number" 
+                            placeholder="Enter Username" 
                             onChange={handleChange}
                             /> 
                             <FaUser className="icon"/>
                     </div>
+                    {serverErrors && serverErrors.findErrors("username") && <Alert color="danger">{serverErrors.findErrors("username")}</Alert>}
                     {formErrors.username && <Alert color="danger">{formErrors.username}</Alert>}
                     <div className="input-box">
                         <input 
@@ -120,7 +134,7 @@ export default function LoginForm() {
                             name="password"
                             id="password"
                             value={form.password}
-                            placeholder="Enter Password" 
+                            placeholder="Enter password" 
                             onChange={handleChange}
                             />
                             <div onClick={() => {setISVisible(!isVisible)}}>
@@ -128,16 +142,37 @@ export default function LoginForm() {
                             </div>
                             <FaLock className="icon"/>
                     </div>
-                    {serverErrors[0] && <Alert color="danger">{serverErrors.findErrors("password")}</Alert>}
                     {formErrors.password && <Alert color="danger">{formErrors.password}</Alert>}
-                    <div className="remember-forgot">
-                        {/* <label><input type="checkbox"/>Remember me</label> */}
-                        <Link to="/forgot-password" style={{ color: '#231f20' }}><p>Forgot Password</p></Link>
+                    {serverErrors && serverErrors.findErrors("password") && <Alert color="danger">{serverErrors.findErrors("password")}</Alert>}
+                    <div className="input-box">
+                        <input
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => {setConfirmPassword(e.target.value)}}
+                            placeholder="Confirm new Password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                        />
                     </div>
-                    <input className="input-button" type="submit" value="Login" />
+                    {formErrors.confirmPassword && <Alert color="danger">{formErrors.confirmPassword}</Alert>}
+                    <div className="input-box">
+                        <input 
+                            type="text"
+                            name="email"
+                            id="email"
+                            value={form.email}
+                            placeholder="Enter Email" 
+                            onChange={handleChange}
+                            />
+                            <MdMail className="icon"/>
+                    </div>
+                    {formErrors.email && <Alert color="danger">{formErrors.email}</Alert>}
+                    {serverErrors && serverErrors.findErrors("email") && <Alert color="danger">{serverErrors.findErrors("email")}</Alert>}
+                   
+                    <input className="input-button" type="submit" value="Register" />
                     <div className="register-link">
-                        <label>Don't have an account?</label>
-                        <Link to="/register" style={{ color: '#231f20' }}><p>Register</p></Link>
+                        <label>Already have an account? Click here to </label>
+                        <Link className="link-style" to="/login"><p>Login</p></Link>
                     </div>
                 </form>
                 

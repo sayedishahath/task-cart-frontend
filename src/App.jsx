@@ -15,6 +15,7 @@ import PrivateRoutes from './components/PrivateRoutes.jsx';
 import UnAuthorized from './components/UnAuthorized.jsx';
 import NavBar from './components/Navbar/NavBar.jsx';
 import Cart from './components/Cart/Cart.component.jsx';
+import Checkout from './components/Checkout/Checkout.component.jsx';
 import { startGetProducts } from './actions/productsAction.js';
 import { startGetMyCart } from './actions/cartAction.js';
 
@@ -53,6 +54,8 @@ useEffect(()=>{
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/unauthorized" element={<UnAuthorized />} />
           <Route path="/cart" element={<Cart/>}/>
+          <Route path="/checkout" element={<Checkout/>}/>
+
       </Routes>
      
     </>

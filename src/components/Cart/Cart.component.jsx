@@ -55,7 +55,8 @@ export default function Cart (){
       return (
         <div className={styles.container}>
           <div className={styles.cartContainer}>
-          {cartItems?.lineItems?.map((item) => (
+          {cartItems?.lineItems?.map((item,index) => (
+            <>
             <CartCard
               key={item.id}
               item={item}
@@ -63,6 +64,8 @@ export default function Cart (){
               onQtyInc={handleQtyInc}
               onQtyDec={handleQtyDec}
             />
+            {index < cartItems.lineItems.length - 1 && <hr style={{}} />}
+            </>
           ))}
           </div>
           <div className={styles.amountContainer}>

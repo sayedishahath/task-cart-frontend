@@ -54,6 +54,7 @@ export default function Cart (){
       
       return (
         <div className={styles.container}>
+          <div className={styles.cartContainer}>
           {cartItems?.lineItems?.map((item) => (
             <CartCard
               key={item.id}
@@ -63,9 +64,13 @@ export default function Cart (){
               onQtyDec={handleQtyDec}
             />
           ))}
-          <div>
-          <h5>Total Amount</h5>
-          {!cartItems || cartItems?.lineItems?.length === 0 ? 0 : cartItems?.totalAmount}
+          </div>
+          <div className={styles.amountContainer}>
+            <div className={styles.title}>Total Amount</div>
+            <div className={styles.price}>
+            {!cartItems || cartItems?.lineItems?.length === 0 ? 0 : cartItems?.totalAmount} 
+            </div>
+            <button className={styles.button}>proceed to checkout</button>
           </div>
         </div>
       );

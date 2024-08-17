@@ -66,7 +66,7 @@ export default function LoginForm() {
 
         if(Object.keys(errors).length === 0) {
             try {
-                const response = await axios.post("http://localhost:5000/api/user/login", formData)
+                const response = await axios.post("http://localhost:5001/api/users/login", formData)
                 const token = response.data.token
                 const user = response.data.user
                 localStorage.setItem("token", token)
@@ -75,15 +75,7 @@ export default function LoginForm() {
                 alert("Successfully Logged In")
                 setFormErrors("")
                 setServerErrors("")
-                if(user.role === "admin") {
-                    navigate("/admin-container")
-                }
-                else if(user.role === "customer" && user.phone.isVerified) {
-                    navigate("/customer-container")
-                }
-                else {
-                    navigate("/verify-number")
-                }
+                navigate('/')
             } catch(err) {
                 // alert(err.message)
                 console.log(err)

@@ -18,7 +18,7 @@ import Cart from './components/Cart/Cart.component.jsx';
 import Checkout from './components/Checkout/Checkout.component.jsx';
 import { startGetProducts } from './actions/productsAction.js';
 import { startGetMyCart } from './actions/cartAction.js';
-import {ACCOUNT} from './api/
+import {ACCOUNT} from './apis/api';
 
 function App() {
   

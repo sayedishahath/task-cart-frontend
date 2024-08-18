@@ -107,7 +107,7 @@ export default function LoginForm() {
               name="username"
               id="username"
               value={form.username}
-              placeholder="Enter Email/Number"
+              placeholder="Enter Email"
               onChange={handleChange}
             />
             <FaUser className={styles.icon} />

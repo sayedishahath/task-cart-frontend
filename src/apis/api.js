@@ -1,5 +1,5 @@
 // export const API_COMMON_PATH = 'http://localhost:5001/api/'
-export const API_COMMON_PATH = 'https://task-cart-backend.onrender.com'
+export const API_COMMON_PATH = 'https://task-cart-backend.onrender.com/api/'
 
 export const LOGIN = API_COMMON_PATH+'users/login'
 export const REGISTER = API_COMMON_PATH+'users/register'

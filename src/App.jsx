@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
     if(localStorage.getItem("token")) {
         (async () => {
-            const response = await axios.get(ACCOUNT {
+            const response = await axios.get(ACCOUNT,{
                 headers : {
                     "Authorization" : localStorage.getItem("token")
                 }

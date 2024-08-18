@@ -18,6 +18,7 @@ import Cart from './components/Cart/Cart.component.jsx';
 import Checkout from './components/Checkout/Checkout.component.jsx';
 import { startGetProducts } from './actions/productsAction.js';
 import { startGetMyCart } from './actions/cartAction.js';
+import {ACCOUNT} from './api/
 
 function App() {
   
@@ -28,7 +29,7 @@ function App() {
   useEffect(() => {
     if(localStorage.getItem("token")) {
         (async () => {
-            const response = await axios.get("http://localhost:5001/api/users/account", {
+            const response = await axios.get(ACCOUNT {
                 headers : {
                     "Authorization" : localStorage.getItem("token")
                 }

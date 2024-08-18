@@ -24,7 +24,7 @@
   margin: 0;
 }
 
-.paymentCard__header button {
+.button {
   background-color: #4CAF50;
   color: #fff;
   border: none;
@@ -33,12 +33,13 @@
   cursor: pointer;
 }
 
-.paymentCard__header button:hover {
+.button:hover {
   background-color: #3e8e41;
 }
 
 .paymentCard__body {
   padding: 20px;
+  text-align: left;
 }
 
 .paymentCard__body ul {

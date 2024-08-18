@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "reactstrap";
 import { FaLock, FaUser } from "react-icons/fa";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
-
+import { LOGIN } from "../../apis/api";
 import { useAuth } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import styles from "./Login.module.css";
@@ -60,7 +60,7 @@ export default function LoginForm() {
     if (Object.keys(errors).length === 0) {
       try {
         const response = await axios.post(
-          "http://localhost:5001/api/users/login",
+          LOGIN,
           formData
         );
         const token = response.data.token;

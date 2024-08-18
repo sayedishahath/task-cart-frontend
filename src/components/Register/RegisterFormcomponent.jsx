@@ -10,6 +10,7 @@ import PhoneInput from "react-phone-input-2"
 import 'react-phone-input-2/lib/style.css'
 import styles from "./Register.module.css"
 import toast from "react-hot-toast";
+import { REGISTER } from "../../apis/api";
 Array.prototype.findErrors = function(name) {
     let result = ""
     this.forEach(ele => {
@@ -82,7 +83,7 @@ export default function Register() {
 
         if(Object.keys(errors).length === 0) {
             try {
-                const response = await axios.post("http://localhost:5001/api/users/register", formData)
+                const response = await axios.post(REGISTER, formData)
                 console.log(response.data)
                 toast.success("Successfully Registered and Login to Continue!")
                 setForm({

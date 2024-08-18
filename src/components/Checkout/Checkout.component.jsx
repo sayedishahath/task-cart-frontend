@@ -5,17 +5,23 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { startGetMyCart, startDeleteMyCartLineItem, startDecQty, startIncQty } from "../../actions/cartAction"
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 export default function Checkout (){
     
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const cartItems = useSelector((state)=>{
     return state.cart.data
   })
+  const handlePay = ()=>{
+    toast.success('payment successful')
+    navigate('/')
+  }
   return (
     <div className={styles.paymentCard}>
       <div className={styles.paymentCard__header}>
         <h2>Payment Method</h2>
-        <button>Edit</button>
+        
       </div>
       <div className={styles.paymentCard__body}>
         <ul>
@@ -41,6 +47,7 @@ export default function Checkout (){
           </li>
         </ul>
       </div>
+      <button className={styles.button} onClick={handlePay}>Pay</button>
     </div>
   );
 

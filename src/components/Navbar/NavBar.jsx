@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { LuLogOut } from "react-icons/lu";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
-import styles from "./NavBar.module.css";
+import styles from "./Navbar.module.css";
 
 export default function NavBar() {
   const { user, handleLogout } = useAuth();

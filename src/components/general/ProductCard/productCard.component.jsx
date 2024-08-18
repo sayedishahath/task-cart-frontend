@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "./ProductCard.module.css";
+import styles from "./productCard.module.css";
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../../context/AuthContext';
 import { startCreateCart } from '../../../actions/cartAction'

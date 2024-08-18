@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { startGetMyCart, startDeleteMyCartLineItem, startDecQty, startIncQty } from "../../actions/cartAction"
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 export default function Cart (){
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -32,7 +33,12 @@ export default function Cart (){
         dispatch(startDecQty(item.productId))
       };
       const handleCheckout = ()=>{
-        navigate('/checkout')
+        if((cartItems.length===0 || cartItems?.lineItems?.length === 0)){
+          return(toast.error('Add items to cart'))
+        }
+        else{
+          navigate('/checkout')
+        }
       }
       
       return (
@@ -58,7 +64,7 @@ export default function Cart (){
             <div className={styles.price}>
             {`${(cartItems.length===0 || cartItems?.lineItems?.length === 0) ? '$ '+0 : '$ '+cartItems?.totalAmount}`} 
             </div>
-            <button className={styles.button} onClick={handleCheckout} disabled={cartItems?.lineItems?.length===0}>proceed to checkout</button>
+            <button className={styles.button} onClick={handleCheckout} >proceed to checkout</button>
           </div>
         </div>
       );

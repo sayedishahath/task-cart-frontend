@@ -37,22 +37,19 @@
     margin-bottom: 16px;
   }
   
-  .qtyButton {
-   color: white;
-  }
-  
-  .qtyButton:hover {
-    color: white;
-  }
   
   .qty {
     font-size: 18px;
     font-weight: bold;
     margin: 0 8px;
   }
+
+  .qtyButton {
+    background-color: #f0f0f0;
+  }
   
   .removeButton {
-    background-color: #fff;
+    background-color: #f0f0f0;
     width: 120px;
     height: 40px;
     border: none;
@@ -63,5 +60,5 @@
   }
   
   .removeButton:hover {
-    background-color: #f0f0f0;
+    background-color: #c9bfbf;
   }

@@ -84,7 +84,7 @@ export default function Register() {
             try {
                 const response = await axios.post("http://localhost:5001/api/users/register", formData)
                 console.log(response.data)
-                toast.success("Successfully Registered!")
+                toast.success("Successfully Registered and Login to Continue!")
                 setForm({
                     username : "",
                     password : "",
@@ -94,7 +94,7 @@ export default function Register() {
                 setFormErrors("")
                 setServerErrors("")
                 // setIsRegistered(true)
-                navigate("/")
+                navigate("/login")
             } catch(err) {
                 // alert(err.message)
                 console.log(err)
@@ -110,14 +110,15 @@ export default function Register() {
     }
 
     return (
-        <div className="login">
-            <div className="wrapper">
+        <div className={styles.container}>
+            <div className={styles.formContainer}>
                 <form onSubmit={handleSubmit}>
                     <h1>Register</h1>
                     {serverErrors.error && (
-                        <Alert color="danger">{serverErrors && serverErrors.error} </Alert>
+                        <span className={styles.error}>{serverErrors && serverErrors.error} </span>
                     )}
-                    <div className="input-box">
+                    <div className={styles.formGroup}>
+                        <div className={styles.inputWrapper}>
                         <input 
                             type="text"
                             name="username"
@@ -126,11 +127,13 @@ export default function Register() {
                             placeholder="Enter Username" 
                             onChange={handleChange}
                             /> 
-                            <FaUser className="icon"/>
+                            <FaUser className={styles.icon}/>
+                        </div>
                     </div>
-                    {serverErrors && serverErrors.findErrors("username") && <Alert color="danger">{serverErrors.findErrors("username")}</Alert>}
-                    {formErrors.username && <Alert color="danger">{formErrors.username}</Alert>}
-                    <div className="input-box">
+                    {serverErrors && serverErrors.findErrors("username") && <span className={styles.error}>{serverErrors.findErrors("username")}</span>}
+                    {formErrors.username && <span className={styles.error}>{formErrors.username}</span>}
+                    <div className={styles.formGroup}>
+                    <div className={styles.inputWrapper}>
                         <input 
                             type={isVisible ? "text" : "password"}
                             name="password"
@@ -140,13 +143,14 @@ export default function Register() {
                             onChange={handleChange}
                             />
                             <div onClick={() => {setISVisible(!isVisible)}}>
-                                {isVisible ? <MdVisibilityOff className="visible-icon"/> : <MdVisibility className="visible-icon"/>}
+                                {isVisible ? <MdVisibilityOff className={styles.icon}/> : <MdVisibility className={styles.icon}/>}
                             </div>
-                            <FaLock className="icon"/>
+                            </div>
                     </div>
-                    {formErrors.password && <Alert color="danger">{formErrors.password}</Alert>}
-                    {serverErrors && serverErrors.findErrors("password") && <Alert color="danger">{serverErrors.findErrors("password")}</Alert>}
-                    <div className="input-box">
+                    {formErrors.password && <span className={styles.error}>{formErrors.password}</span>}
+                    {serverErrors && serverErrors.findErrors("password") && <span className={styles.error}>{serverErrors.findErrors("password")}</span>}
+                    <div className={styles.formGroup}>
+                        <div className={styles.inputWrapper}>
                         <input
                             type={isVisibleC ? "text" : "password"}
                             value={confirmPassword}
@@ -156,11 +160,13 @@ export default function Register() {
                             name="confirmPassword"
                         />
                         <div onClick={() => {setISVisibleC(!isVisibleC)}}>
-                                {isVisibleC? <MdVisibilityOff className="visible-icon"/> : <MdVisibility className="visible-icon"/>}
+                                {isVisibleC? <MdVisibilityOff className={styles.icon}/> : <MdVisibility className={styles.icon}/>}
+                         </div>
                          </div>
                     </div>
-                    {formErrors.confirmPassword && <Alert color="danger">{formErrors.confirmPassword}</Alert>}
-                    <div className="input-box">
+                    {formErrors.confirmPassword && <span className={styles.error}>{formErrors.confirmPassword}</span>}
+                    <div className={styles.formGroup}>
+                        <div className={styles.inputWrapper}>
                         <input 
                             type="text"
                             name="email"
@@ -169,15 +175,16 @@ export default function Register() {
                             placeholder="Enter Email" 
                             onChange={handleChange}
                             />
-                            <MdMail className="icon"/>
+                            <MdMail className={styles.icon}/>
+                            </div>
                     </div>
-                    {formErrors.email && <Alert color="danger">{formErrors.email}</Alert>}
-                    {serverErrors && serverErrors.findErrors("email") && <Alert color="danger">{serverErrors.findErrors("email")}</Alert>}
+                    {formErrors.email && <span className={styles.error}>{formErrors.email}</span>}
+                    {serverErrors && serverErrors.findErrors("email") && <span className={styles.error}>{serverErrors.findErrors("email")}</span>}
                    
-                    <input className="input-button" type="submit" value="Register" />
-                    <div className="register-link">
+                    <input className={styles.inputButton} type="submit" value="Register" />
+                    <div className={styles.registerLink}>
                         <label>Already have an account? Click here to </label>
-                        <Link className="link-style" to="/login"><p>Login</p></Link>
+                        <Link  to="/login"><p>Login</p></Link>
                     </div>
                 </form>
                 

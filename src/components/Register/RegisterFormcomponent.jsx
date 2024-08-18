@@ -29,7 +29,7 @@ Array.prototype.findErrors = function(name) {
 }
 
 export default function Register() {
-
+    const [loading,setLoading] = useState(false)
     const navigate = useNavigate()
     const [form, setForm] = useState({
         username : "",
@@ -73,7 +73,7 @@ export default function Register() {
         e.preventDefault()
 
         // console.log(form)
-
+        setLoading(true)
         const formData = {
             username : form.username,
             password : form.password,
@@ -86,6 +86,7 @@ export default function Register() {
                 const response = await axios.post(REGISTER, formData)
                 console.log(response.data)
                 toast.success("Successfully Registered and Login to Continue!")
+                setLoading(false)
                 setForm({
                     username : "",
                     password : "",
@@ -101,10 +102,12 @@ export default function Register() {
                 console.log(err)
                 setFormErrors("")
                 setServerErrors(err.response.data.error)
+                setLoading(false)
                 console.log(serverErrors)
             }
         } else {
             console.log(formErrors)
+            setLoading(false)
             setFormErrors(errors)
             setServerErrors("")
         }
@@ -181,8 +184,12 @@ export default function Register() {
                     </div>
                     {formErrors.email && <span className={styles.error}>{formErrors.email}</span>}
                     {serverErrors && serverErrors.findErrors("email") && <span className={styles.error}>{serverErrors.findErrors("email")}</span>}
-                   
-                    <input className={styles.inputButton} type="submit" value="Register" />
+                   <div>
+                    <input 
+                    className={styles.inputButton}
+                    type="submit" 
+                    value={loading?'Registering...':'Register'} />
+                    </div>
                     <div className={styles.registerLink}>
                         <label>Already have an account? Click here to </label>
                         <Link  to="/login"><p>Login</p></Link>

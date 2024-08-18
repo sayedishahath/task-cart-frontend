@@ -21,6 +21,7 @@ Array.prototype.findErrors = function(name) {
 };
 
 export default function LoginForm() {
+  const [loading,setLoading] = useState(false)
   const { handleLogin } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -51,7 +52,7 @@ export default function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true)
     const formData = {
       username: form.username,
       password: form.password,
@@ -69,6 +70,7 @@ export default function LoginForm() {
         console.log(response.data);
         handleLogin(user);
         toast.success("logged in successfully!");
+        setLoading(false)
         setFormErrors("");
         setServerErrors("");
         navigate("/");
@@ -81,10 +83,12 @@ export default function LoginForm() {
         }
         console.log(serverErrors);
         setFormErrors("");
+        setLoading(false)
       }
     } else {
       setFormErrors(errors);
       setServerErrors("");
+      setLoading(false)
     }
   };
 
@@ -142,7 +146,7 @@ export default function LoginForm() {
           <input
             className={styles.inputButton}
             type="submit"
-            value="Login"
+            value={loading?'logging in..':'login'}
           />
           <div className={styles.registerLink}>
             <label>Don't have an account?</label>
